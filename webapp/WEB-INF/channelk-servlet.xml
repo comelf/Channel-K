@@ -15,16 +15,17 @@
 
 	<mvc:annotation-driven />
 
-	<mvc:resources location="/WEB-INF/css/" mapping="/css/**/" />
-	<mvc:resources location="/WEB-INF/js/" mapping="/js/**" />
-	<mvc:resources location="/WEB-INF/fonts/" mapping="/fonts/**" />
-	<mvc:resources location="/WEB-INF/editor/" mapping="/editor/**" />
-	<mvc:resources location="/WEB-INF/img/" mapping="/img/**" />
+	<mvc:resources location="/images/" mapping="/images/**" cache-period="31556926"/>
+	<mvc:resources location="/WEB-INF/css/" mapping="/css/**/" cache-period="86400"/>
+	<mvc:resources location="/WEB-INF/js/" mapping="/js/**" cache-period="86400"/>
+	<mvc:resources location="/WEB-INF/fonts/" mapping="/fonts/**" cache-period="31556926"/>
+	<mvc:resources location="/WEB-INF/editor/" mapping="/editor/**" cache-period="31556926"/>
+	<mvc:resources location="/WEB-INF/img/" mapping="/img/**"  cache-period="31556926" />
 
 	<bean id="viewResolver"
 		  class="org.springframework.web.servlet.view.InternalResourceViewResolver"
 		  p:prefix="/WEB-INF/jsp/" p:suffix=".jsp" p:order="1"/>
-
+     
 	<bean class="org.springframework.web.servlet.view.BeanNameViewResolver"
 		  p:order="2" />
 

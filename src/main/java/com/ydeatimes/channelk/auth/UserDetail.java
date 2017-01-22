@@ -1,8 +1,10 @@
 package com.ydeatimes.channelk.auth;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -19,24 +21,30 @@ public class UserDetail implements org.springframework.security.core.userdetails
 	private String userName;
 	private String userPhone;
 	private int userPoint;
-	private boolean userReadPromotion;
+	private List<String> userRole;
 	
 	public UserDetail(User user) {
 		this.userLoginId = user.getUser_login_id();
-		this.password = user.getUser_password();
-		this.userEmail = user.getUser_email();
-		this.userDBId = user.getUser_id();
-		this.userName = user.getUser_name();
-		this.userPhone = user.getUser_phone();
-		this.userPoint = user.getUser_point();
-		//this.userReadPromotion = user.isRead_promotion();
+		this.password 	= user.getUser_password();
+		this.userEmail 	= user.getUser_email();
+		this.userDBId 	= user.getId();
+		this.userName 	= user.getUser_name();
+		this.userPoint 	= user.getUser_point();
+		
+		if(user.getUser_role() != null){
+			userRole =   Arrays.asList(user.getUser_role().split(","));
+		}
 	}
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
-		authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
-
+		
+		if(userRole != null){
+			for (String role : userRole) {
+				authorities.add(new SimpleGrantedAuthority(role));
+			}
+		}
 		return authorities;
 	}
 
@@ -106,12 +114,4 @@ public class UserDetail implements org.springframework.security.core.userdetails
 		this.userPoint = userPoint;
 	}
 
-	public boolean getUserReadPromotion(){
-		return this.userReadPromotion;
-	}
-	
-	public void setUserReadPromotion(boolean userReadPromotion) {
-		this.userReadPromotion = userReadPromotion;
-	}	
-	
 }

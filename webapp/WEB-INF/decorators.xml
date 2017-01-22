@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<decorators defaultdir="/WEB-INF/jsp">
+    <excludes>
+        <pattern>/editor*</pattern>
+        <pattern>/popup/*</pattern>
+        <pattern>/user/denied*</pattern>
+        <pattern>/user/login*</pattern>
+    </excludes>
+
+	<decorator name="channelk" page="./view/decorator.jsp">
+        <pattern>*</pattern>
+    </decorator>
+
+    <decorator name="admin" page="admin_decorator.jsp">
+        <pattern>/admin*</pattern>
+    </decorator>
+    
+</decorators>

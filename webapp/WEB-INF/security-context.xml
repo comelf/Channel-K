@@ -5,18 +5,27 @@
               xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-4.1.xsd
         http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd">
 
+
+	<http pattern="/media/**" security="none" />
+	
 	<http auto-config="true" use-expressions="true">
-	    <intercept-url pattern="/admin/**" access="hasRole('ROLE_USER')" />
+	    <intercept-url pattern="/admin**" access="hasRole('ROLE_ADMIN')" />
+	    <intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')" />
+	
+	
+	
+		<form-login login-page="/user/login"
+                       username-parameter="id"
+                       password-parameter="pw"
+                       login-processing-url="/user/loginProcess"
+                       default-target-url="/"
+                       authentication-failure-url="/user/login?login_error=1"
+                       always-use-default-target="true" />
+		<logout invalidate-session="true" logout-url="/user/logout" logout-success-url="/" />
+		<access-denied-handler error-page="/user/denied" />
 	</http>
 
-<authentication-manager>
-    <authentication-provider>
-      <user-service>
-        <user name="jimi" password="jimispassword" authorities="ROLE_USER" />
-        <user name="bob" password="bobspassword" authorities="ROLE_USER" />
-      </user-service>
-    </authentication-provider>
-  </authentication-manager>
+	
 
 	<!-- <http pattern="/media/**" security="none" />
 

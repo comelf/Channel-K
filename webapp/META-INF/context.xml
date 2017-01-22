@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='utf-8'?>
+<Context path="/" docBase="/" reloadable="true" crossContext="true">
+
+	<Resources className="org.apache.naming.resources.VirtualDirContext"
+			extraResourcePaths="/images=/channelk/media/images"/>
+</Context>
