@@ -5,9 +5,12 @@ import java.util.Properties;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
@@ -26,8 +29,12 @@ import com.ydeatimes.channelk.auth.PhPass;
 @ComponentScan(basePackages = { "com.ydeatimes.channelk.web" })
 @EnableTransactionManagement
 @EnableJpaRepositories(basePackages={"com.ydeatimes.channelk.web.repository"})
+@PropertySource(value = "classpath:application-properties.xml")
 public class ApplicationConfig {
-
+	
+	@Autowired
+	private Environment env;
+	
 	@Bean
 	public CommonsMultipartResolver multipartResolver() {
 		CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
@@ -54,11 +61,8 @@ public class ApplicationConfig {
 		DriverManagerDataSource dataSource = new DriverManagerDataSource();
 		dataSource.setDriverClassName("com.mysql.jdbc.Driver");
 		dataSource.setUrl("jdbc:mysql://localhost:3306/channelk");
-		dataSource.setUsername("root");
-		dataSource.setPassword("dddd");
-//		dataSource.setUsername("channelk");
-//		dataSource.setPassword("channelK!#%79");
-
+		dataSource.setUsername(env.getProperty("db_username"));
+		dataSource.setPassword(env.getProperty("db_password"));
 		return dataSource;
 	}
 

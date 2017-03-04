@@ -3,9 +3,15 @@ package com.ydeatimes.channelk.web.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -24,6 +30,8 @@ import com.ydeatimes.channelk.web.repository.ContentInfoRepository;
 import com.ydeatimes.channelk.web.repository.ContentStatusRepository;
 import com.ydeatimes.channelk.web.repository.ContentTypeRepository;
 import com.ydeatimes.channelk.web.repository.ETCContentRepository;
+import com.ydeatimes.channelk.web.service.EtcContentService;
+import com.ydeatimes.channelk.web.util.Paging;
 
 @Controller
 public class MainController {
@@ -43,6 +51,12 @@ public class MainController {
 	@Autowired
 	ContentStatusRepository statusRepo;
 	
+//	@Autowired
+//	ETCContentRepository etcContentRepo;
+	
+	@Autowired
+	EtcContentService etcContent;
+	
 	@RequestMapping(value="/", method=RequestMethod.GET)
 	public String indexPage(Model model){
 		List<MainTopImgInfo> list = new ArrayList<MainTopImgInfo>();
@@ -59,7 +73,7 @@ public class MainController {
 		model.addAttribute("mainTop", new JSONArray(list));
 		
 		ContentStatus status = statusRepo.findByText(ContentStatus.OPEN);
-		List<CapContent> capList = capContentRepo.findTop13ByStatusOrderByCreateDateDesc(status);
+//		List<CapContent> capList = capContentRepo.findTop13ByStatusOrderByCreateDateDesc(status);
 		
 //		List<MainTopImgInfo> capList = new ArrayList<MainTopImgInfo>();
 //		capList.add(new MainTopImgInfo("/images/003cap/8월의크리스마스.jpg", "8월의크리스마스", 0, 0));
@@ -70,7 +84,7 @@ public class MainController {
 //		capList.add(new MainTopImgInfo("/images/003cap/나비효과.jpg", "나비효과", 0, 0));
 //		capList.add(new MainTopImgInfo("/images/003cap/달콤살벌한연인.gif", "달콤살벌한연인", 0, 0));
 //		capList.add(new MainTopImgInfo("/images/003cap/달콤한인생.jpg", "달콤한인생", 0, 0));
-		model.addAttribute("capList", capList);
+//		model.addAttribute("capList", capList);
 		
 //		List<MainTopImgInfo> capsubList = new ArrayList<MainTopImgInfo>();
 //		capsubList.add(new MainTopImgInfo("/images/003cap/러브레터.jpg", "러브레터", 0, 0));
@@ -80,6 +94,9 @@ public class MainController {
 //		capsubList.add(new MainTopImgInfo("/images/003cap/파이트클럽.jpg", "파이트클럽", 0, 0));
 //		capsubList.add(new MainTopImgInfo("/images/003cap/프로메테우스(인셉션대신).jpg", "프로메테우스", 0, 0));
 //		model.addAttribute("capsubList", capsubList);
+		
+		List<ETCContent> etcList = etcContent.getETCListForMain();
+		model.addAttribute("etcList", etcList);
 		return "/view/index";
 	}
 	
@@ -180,22 +197,22 @@ public class MainController {
 		return "/view/video/list";
 	}
 	
-	@Autowired
-	ETCContentRepository etcContentRepo;
-	
-	@RequestMapping(value="/etc", method=RequestMethod.GET)
-	public String etcContentList(Model model){
-		List<ETCContent> etcList = etcContentRepo.findTop15ByOrderByCreateDateDesc();
-		model.addAttribute("etcList", etcList);
+	@RequestMapping(value="/etc/list", method=RequestMethod.GET)
+	public String etcContentList(@RequestParam(value="page", required=false, defaultValue="1")Integer page , Model model){
+		Page<ETCContent> etcPage = etcContent.getEtcPageList(page);
+		model.addAttribute("etcList", etcPage.getContent());
+		model.addAttribute("paging", new Paging(etcPage.getNumber() + 1, (int)etcPage.getTotalElements(), etcPage.getSize()));
 		return "/view/etc/list";
 	}
 	
-	@RequestMapping(value="/etc/content/page", method=RequestMethod.GET)
-	public String etcContentDetail(@RequestParam(value="number")int etcNum, Model model){
-			ContentStatus status = statusRepo.findByText(ContentStatus.OPEN);
-			ETCContent capContent = etcContentRepo.findByIdAndStatus(etcNum, status);
-			capContent.setViews(capContent.getViews()+1);
+	@RequestMapping(value="/etc/content/{contentId}", method=RequestMethod.GET)
+	public String etcContentDetail(@PathVariable("contentId")Integer contentId, @RequestParam(value="page", required=false, defaultValue="1")Integer page, Model model){
+			ETCContent capContent = etcContent.getEtcContentDetail(contentId);
 			model.addAttribute("etcContent", capContent);
+			
+			Page<ETCContent> etcPage = etcContent.getEtcPageList(page);
+			model.addAttribute("etcList", etcPage.getContent());
+			model.addAttribute("paging", new Paging(etcPage.getNumber() + 1, (int)etcPage.getTotalElements(), etcPage.getSize()));
 			return "/view/etc/detail";
 	}
 	

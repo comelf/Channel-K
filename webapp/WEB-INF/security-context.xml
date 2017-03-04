@@ -21,7 +21,7 @@
                        default-target-url="/"
                        authentication-failure-url="/user/login?login_error=1"
                        always-use-default-target="true" />
-		<logout invalidate-session="true" logout-url="/user/logout" logout-success-url="/" />
+		<logout invalidate-session="true" logout-url="/user/logout" logout-success-url="/admin" />
 		<access-denied-handler error-page="/user/denied" />
 	</http>
 

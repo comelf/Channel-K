@@ -6,13 +6,14 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.ydeatimes.channelk.web.model.User;
+import com.ydeatimes.channelk.web.status.UserStatus;
 
 @Repository
 public interface UserRepository extends JpaRepository<User,  Integer>{
 
-	@Query("select u from users as u where u.user_crc_id = :crc and u.user_login_id = :login_id")
+	@Query("select u from users as u where u.user_crc_id = :crc and u.user_login_id = :login_id and user_status = "+UserStatus.OPEN)
 	User findByUserLoginId(@Param("crc") int crcCode, @Param("login_id")String login_id);
 
 	User findById(int userDbId);
-	
+
 }

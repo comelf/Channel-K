@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html>
 <html>
 <body>
@@ -13,7 +14,7 @@
 			</div>
 		</div>
 		
-		<div class="today-cap">
+		<%-- <div class="today-cap content-list">
 			<div class="row section-head">
 				<div class="col-md-12">
 					<div>캡-콘텐츠 연재중</div>
@@ -57,9 +58,9 @@
 				    </div>
 				</div> -->
 			</div>
-		</div>
+		</div> --%>
 		
-		<div class="today-broadcast">
+		<!-- <div class="today-broadcast content-list">
 			<div class="row section-head">
 				<div class="col-md-12">
 					<div>방송 섹션</div>
@@ -90,6 +91,74 @@
 					<div class="size1"><img src="/img/sample/today/mbcw.jpg" width="100%" height="100%"></div>
 					<div class="size1"><img src="/img/sample/today/ghstnfskasu.jpg" width="100%" height="100%"></div>				
 				</div>
+			</div>
+		</div> -->
+		
+		
+		<div class="today-cap content-list">
+			<div class="row section-head">
+				<div class="col-md-12">
+					<div>TV 캡 다시보기</div>
+					<hr>
+				</div>
+			</div>
+			<div class="row">
+				<c:forEach items="${etcList}"  var="etc" end="7">
+					<div class='col-md-3  col-xs-6'>
+						<a href="/etc/content/${etc.id}">
+							<div class="thumbnail">
+								<div class="thumbnail-wrapper">
+									<div class="thumbnail-img" style="background-image: url(${etc.thumbnail.getUrlPathWithQuality(0)});"></div>
+								</div>
+								<div class='caption'>
+									<p class="title">${etc.title}</p>
+									<p>캐스터 : ${etc.user.user_name}</p>
+								</div>
+							</div>
+						</a>
+					</div>
+				</c:forEach>
+				
+				<c:forEach items="${etcList}"  var="etc" begin="8" end="12">
+					<div class='col-md-2  col-xs-4'>
+						<a href="/etc/content/${etc.id}">
+						<div class='thumbnail'>
+							<div class="thumbnail-wrapper">
+								<div class="thumbnail-img" style="background-image: url(${etc.thumbnail.getUrlPathWithQuality(0)});"></div>
+							</div>
+							<div class='caption'>
+								<p class="title">${etc.title}</p>
+								<p>캐스터 : ${etc.user.user_name}</p>
+							</div>
+						</div>
+						</a>
+					</div>
+				</c:forEach>
+				
+				<c:if test="${fn:length(etcList) > 13}">
+					<div class='col-md-2  col-xs-4'>
+						<a href="/etc/list">
+						<div class='thumbnail'>
+							<div class="thumbnail-wrapper">
+								<div class="thumbnail-img thumbnail-more" style="background-image: url(${etcList[13].thumbnail.getUrlPathWithQuality(0)})"></div>
+							</div>
+							<div class='caption'>
+								<p style="text-align: center; ">더보기</p>
+								<p style="height: 1.42857143em;"></p>
+							</div>
+						</div>
+						</a>
+					</div>
+				</c:if>
+				
+				<!-- <div class="col-md-3">
+					<div class="thumbnail">
+				      <img src="..." alt="...">
+				      <div class="caption">
+				        <p>blabla</p>
+				      </div>
+				    </div>
+				</div> -->
 			</div>
 		</div>
 	</div>	

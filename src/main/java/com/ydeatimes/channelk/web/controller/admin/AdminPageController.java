@@ -412,6 +412,19 @@ public class AdminPageController {
         return "/admin/content/addEtc";
     }
 	
+	@RequestMapping(value="/etccontent/list", method=RequestMethod.GET)
+    public String etcContentListPage(@RequestParam(defaultValue="1", required=false) int page, Model model) {
+		
+		int start = (page - 1);
+		
+		Pageable pageable = new PageRequest(start, count);
+		
+		Page<ETCContent> contentInfoList = etcContentRepo.findAll(pageable);
+		model.addAttribute("etcContentList", contentInfoList.getContent());
+		model.addAttribute("paging", new Paging(page, (int)contentInfoList.getTotalElements(), count));
+        return "/admin/content/etclist";
+    }
+	
 	@RequestMapping(value="/etccontent/create", method=RequestMethod.POST)
     public String createNonCapContent(ETCContent etcContent, Model model, HttpSession session) {
 		SecurityContext userDetails = (SecurityContext) session.getAttribute("SPRING_SECURITY_CONTEXT");
@@ -504,6 +517,19 @@ public class AdminPageController {
 		cEtcContent.setTitle(etccontent.getTitle());
 		cEtcContent.setContent(etccontent.getContent());
 		cEtcContent.setContent(etccontent.getContent());
+		etcContentRepo.saveAndFlush(cEtcContent);
+		model.addAttribute("etcContent", cEtcContent);
+        return "/admin/content/editEtc";
+    }
+	
+	@RequestMapping(value="/etccontent/detail/{contentId}", method=RequestMethod.GET)
+    public String editNonCapContent(@PathVariable("contentId") Integer contentId, Model model, HttpSession session) {
+		List<ContentInfo> list = conInfoRepo.findAll();
+		List<ContentStatus> statusList = conStatusRepo.findAll();
+		model.addAttribute("contentInfoList", list);
+		model.addAttribute("contentStatusList", statusList);
+		
+		ETCContent cEtcContent = etcContentRepo.findById(contentId);
 		model.addAttribute("etcContent", cEtcContent);
         return "/admin/content/editEtc";
     }

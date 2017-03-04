@@ -5,7 +5,7 @@ var ADMIN = {
 		var row = e.target.parentNode;
 		row.style.cssText ="background-color:#bbb;";
 		if(typeof input.value != "undefined"){
-			var path = "/" + this.getBasePath() + "/detail/" + input.value
+			var path = this.getBasePath() + "/detail/" + input.value
 			window.location.pathname = path; 
 		}
 	},
@@ -18,8 +18,10 @@ var ADMIN = {
 		var pathArr = path.split("/");
 		
 		var result = "";
-		for (var int = 0; int < pathArr.length -1 ; int++) {
-			result+= "/" +  pathArr[int];
+		if(pathArr.length >1){
+			for (var int = 1; int < pathArr.length -1 ; int++) {
+				result+= "/" +  pathArr[int];
+			}
 		}
 		return result;
 	}

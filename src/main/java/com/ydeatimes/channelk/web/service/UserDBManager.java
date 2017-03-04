@@ -30,10 +30,9 @@ public class UserDBManager {
 		int crcCode = crc.getCode(loginId);
 		User hasUser = userRepo.findByUserLoginId(crcCode, loginId);
 		if(hasUser == null){
-			return true;
+			return false;
 		}
-		
-		return false;
+		return true;
 	}
 
 	public void createUserInAdminPage(User user) {
@@ -43,11 +42,41 @@ public class UserDBManager {
 		user.setUser_join_date(new Date());
 		user.setUser_status(UserStatus.OPEN);
 		user.setUser_point(0);
-		userRepo.save(user);
+		userRepo.saveAndFlush(user);
 	}
 
 	public Page<User> findAllUser(Pageable pageable) {
 		return userRepo.findAll(pageable);
 	}
 
+	public User getUser(int userId) {
+		return userRepo.findById(userId);
+	}
+
+	public User updateUserInAdminPage(User editUser) {
+		User user = getUser(editUser.getId());
+		if(user == null){
+			return null;
+		}else{
+			user.setUser_name(editUser.getUser_name());
+			user.setUser_email(editUser.getUser_email());
+			user.setUser_role(editUser.getUser_role());
+			user.setUser_status(editUser.getUser_status());
+			
+			return userRepo.saveAndFlush(user);
+		}
+	}
+	
+	public User updateUserPasswordInAdminPage(User editUser) {
+		User user = getUser(editUser.getId());
+		if(user == null){
+			return null;
+		}else{
+			if(!user.getUser_password().equals(editUser.getUser_password())){
+				user.setUser_password(phPass.HashPassword(editUser.getUser_password()));
+			}
+			return userRepo.saveAndFlush(user);
+		}
+	}
+	
 }

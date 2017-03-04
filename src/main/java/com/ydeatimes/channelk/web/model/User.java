@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
@@ -17,6 +18,8 @@ import lombok.NoArgsConstructor;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
+
+import com.ydeatimes.channelk.web.status.UserStatus;
 
 @Data
 @NoArgsConstructor
@@ -28,18 +31,22 @@ public class User implements Serializable {
 	private int id;
 	@NotEmpty
 	@Size(min = 4, max = 20)
-	@Pattern(regexp = "^[A-Za-z]{1}[A-Za-z0_-]{3,20}$")
+	@Pattern(regexp = "^[A-Za-z]{1}[A-Za-z0-9_-]{3,20}$")
 	@Column(unique=true)
 	private String user_login_id;
 	
 	@Column(nullable=false)
 	private int user_crc_id;
 
-	@NotEmpty
 	@Size(min = 6, max = 40)
 	@Pattern(regexp = "^[A-Za-z0-9!@#$%^&+=*(),.//;]{6,40}$")
 	@Column(length = 40)
 	private String user_password;
+	
+	@Size(min = 6, max = 40)
+	@Pattern(regexp = "^[A-Za-z0-9!@#$%^&+=*(),.//;]{6,40}$")
+	@Transient
+	private String user_password_match;
 
 	@NotEmpty
 	private String user_name;
@@ -83,5 +90,9 @@ public class User implements Serializable {
 		} else {
 			return this.user_login_id.toLowerCase();
 		}
+	}
+
+	public boolean isOpen() {
+		return this.user_status == UserStatus.OPEN;
 	}
 }

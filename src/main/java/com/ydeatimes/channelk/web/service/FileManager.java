@@ -23,8 +23,6 @@ public class FileManager {
 	private static final Logger LOG = LoggerFactory
 			.getLogger(FileManager.class);
 	
-	private static final String MEDIA_PATH = "/channelk/media";
-	
 	@Autowired
 	Environment env;
 	
@@ -32,7 +30,7 @@ public class FileManager {
 	ImageRepository imageRepo;
 	
 	public UploadResult readAndSave(MultipartFile file, String des) {
-		Image img = new Image(file.getOriginalFilename(), file.getSize(), des, MEDIA_PATH);
+		Image img = new Image(file.getOriginalFilename(), file.getSize(), des, env.getProperty("media_path"));
 		
 		ImageTransferUtil itu = new ImageTransferUtil();
 		
@@ -81,15 +79,6 @@ public class FileManager {
 
 	private UploadResult resultError(String msg) {
 		return new UploadResult(true, msg, ERROR_IMAGE_ID );
-	}
-
-	public File save(MultipartFile file) throws IllegalStateException, IOException {
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
-		String today = formatter.format(new java.util.Date());
-		String fileName = today +"_" + file.getOriginalFilename();
-		File eFile = new File(env.getRequiredProperty("meesig.file.path")+"/excel/"+fileName);
-		file.transferTo(eFile);
-		return eFile;
 	}
 
 }

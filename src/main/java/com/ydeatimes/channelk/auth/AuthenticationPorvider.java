@@ -17,6 +17,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import com.ydeatimes.channelk.web.model.User;
 import com.ydeatimes.channelk.web.repository.UserRepository;
+import com.ydeatimes.channelk.web.status.UserStatus;
 
 public class AuthenticationPorvider implements AuthenticationProvider {
 	private static final Logger LOG = LoggerFactory
@@ -38,7 +39,7 @@ public class AuthenticationPorvider implements AuthenticationProvider {
 		
 		int crcCode = crc.getCode(user_id);
 		User user = userRepo.findByUserLoginId(crcCode, user_id);
-		System.out.println(user);
+		
 		if (user !=null && PhPass.CheckPassword(user_pw, user.getUser_password())) {
 			List<GrantedAuthority> roles = new ArrayList<GrantedAuthority>();
 			if(user.getUser_role() != null){
