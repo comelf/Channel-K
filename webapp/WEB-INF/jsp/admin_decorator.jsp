@@ -68,10 +68,13 @@
 						<li>
 							<a href="/admin/content/add">Content 추가</a>
 						</li>
-						<!-- <li>
-							<a href="/admin/capcontent/add?cap=true">Cap Content 추가</a>
+						<li>
+							<a href="/admin/capcontent/list">Cap Content 목록</a>
 						</li>
 						<li>
+							<a href="/admin/capcontent/add?cap=true">Cap Content 추가</a>
+						</li>
+						<!-- <li>
 							<a href="/admin/capcontent/add?cap=false">Non Cap Content 추가</a>
 						</li> -->
 						<li>

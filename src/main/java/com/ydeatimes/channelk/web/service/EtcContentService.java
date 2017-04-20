@@ -44,4 +44,10 @@ public class EtcContentService {
 		return content;
 	}
 
+	public Page<ETCContent> getBestList() {
+		ContentStatus status = statusRepo.findByText(ContentStatus.OPEN);
+		Pageable pageable = new PageRequest(0, 9, Direction.DESC, "views");
+		return etcContentRepo.findByStatus(status, pageable);
+	}
+
 }

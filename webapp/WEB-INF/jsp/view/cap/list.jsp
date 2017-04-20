@@ -23,29 +23,35 @@
 		
 		<div class="row cap-list">
 			<div class="row">
-				<c:forEach items="${ capList}"  var="cap" end="3">
-					<div class='col-md-4  col-xs-4'>
+				<c:forEach items="${ capList}"  var="cap" end="2">
+					<div class='col-md-4  col-xs-6'>
 						<a href="/cap/content?id=${cap.id}">
 						<div class='thumbnail'>
-							<img src='${cap.thumbnail.getUrlPathWithQuality(0)}' height="100px" style="width: 100%;height: 180px;">
+							<div class="thumbnail-wrapper">
+								<div class="thumbnail-img" style="background-image: url(${cap.thumbnail.getUrlPathWithQuality(0)});"></div>
+							</div>
 							<div class='caption'>
-								<p>${cap.title}</p>
-								<p>캐스터 : 와이군</p>
+								<p class="title">${cap.title}</p>
+								<p class="creator">캐스터 : 와이군</p>
 							</div>
 						</div>
 						</a>
 					</div>
 				</c:forEach>
 				
-				<c:forEach items="${ capList}"  var="cap" begin="3">
-					<div class='col-md-3 col-xs-4'>
+				<c:forEach items="${ capList}"  var="cap" begin="2">
+					<div class='col-md-3 col-xs-6'>
+						<a href="/cap/content?id=${cap.id}">
 						<div class='thumbnail'>
-							<img src='${cap.thumbnail.getUrlPathWithQuality(0)}' height="100px" style="width: 100%;height: 130px;">
-							<div class='caption'>
-								<p>${cap.title}</p>
-								<p>캐스터 : 와이군</p>
+							<div class="thumbnail-wrapper">
+								<div class="thumbnail-img" style="background-image: url(${cap.thumbnail.getUrlPathWithQuality(0)});"></div>
+							</div>
+							<div class="caption">
+								<p class="title">${cap.title}</p>
+								<p class="creator">캐스터 : 와이군</p>
 							</div>
 						</div>
+						</a>
 					</div>
 				</c:forEach>
 				

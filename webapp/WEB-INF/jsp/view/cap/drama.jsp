@@ -6,37 +6,39 @@
 <body>
 	<div class="cap-content">
 		<div class="row">
-			<div class="col-md-7 cap-banner">
-				<img src="${info.thumbnail.getUrlPathWithQuality(0) }" width="100%">
+			<div class="col-md-7 col-xs-12 cap-banner thumbnail">
+				<div class="thumbnail-wrapper" style="padding-top: 50%;">
+					<div class="thumbnail-img" style="background-image: url(${info.thumbnail.getUrlPathWithQuality(0) });"></div>
+				</div>
 			</div>
-			<div class="col-md-5 cap-info">
+			<div class="col-md-5 col-xs-12 cap-info">
 				<div class="row">
-					<div class="col-md-12 info-title"><strong>${info.title}</strong><span>(${info.sub_title})</span></div>
+					<div class="col-md-12 col-xs-12 info-title"><strong>${info.title}</strong><span>(${info.sub_title})</span></div>
 				</div>
 				<div class="row">
-					<div class="col-md-3 info-head info-bt info-br">${info.category.text}</div>
-					<div class="col-md-3 info-bt info-br">${info.episode}</div>
-					<div class="col-md-6 info-bt">${info.time}</div>
+					<div class="col-md-3 col-xs-3 info-head info-bt info-br">${info.category.text}</div>
+					<div class="col-md-3 col-xs-3 info-bt info-br">${info.episode}</div>
+					<div class="col-md-6 col-xs-6 info-bt">${info.time}</div>
 				</div>
 				<div class="row">
 					<div class="col-md-3 info-head info-bt">제작</div>
 					<div class="col-md-9 info-bt">${info.metas["creators"].meta_value}</div>
 				</div>
 				<div class="row">
-					<div class="col-md-3 info-head">배급</div>
-					<div class="col-md-9">${info.metas["distributor"].meta_value}</div>
+					<div class="col-md-3 col-xs-3 info-head">배급</div>
+					<div class="col-md-9 col-xs-9">${info.metas["distributor"].meta_value}</div>
 				</div>
 				<div class="row">
-					<div class="col-md-3 info-head">출연배우</div>
-					<div class="col-md-9">${info.metas["actors"].meta_value}</div>
+					<div class="col-md-3 col-xs-3 info-head">출연배우</div>
+					<div class="col-md-9 col-xs-9">${info.metas["actors"].meta_value}</div>
 				</div>
 				<div class="row">
-					<div class="col-md-3 info-head">감독</div>
-					<div class="col-md-9">${info.metas["director"].meta_value}</div>
+					<div class="col-md-3 col-xs-3 info-head">감독</div>
+					<div class="col-md-9 col-xs-9">${info.metas["director"].meta_value}</div>
 				</div>
 				<div class="row">
-					<div class="col-md-3 info-head">줄거리</div>
-					<div class="col-md-9" style="line-height: 2.1;">${info.metas["summary"].meta_value}</div>
+					<div class="col-md-3 col-xs-3 info-head">줄거리</div>
+					<div class="col-md-9 col-xs-9" style="line-height: 2.1;">${info.metas["summary"].meta_value}</div>
 				</div>
 			</div>
 		</div>
@@ -49,12 +51,14 @@
 						<hr>
 						<div class='row'>
 							<div onclick="location.href='/cap/content/page?number=${cap.id}'" style="cursor: pointer; overflow: hidden;">
-								<div class='col-md-2  col-xs-2'>
-									<div class='thumbnail'>
-										<img src='${cap.thumbnail.getUrlPathWithQuality(0) }' alt='...'>
+								<div class='col-md-2  col-xs-3'>
+									<div class='thumbnail' style="margin-bottom: 0px;">
+										<div class="thumbnail-wrapper">
+											<div class="thumbnail-img" style="background-image: url(${cap.thumbnail.getUrlPathWithQuality(0)});"></div>
+										</div>
 									</div>
 								</div>
-								<div class='col-md-10  col-xs-10'>
+								<div class='col-md-10  col-xs-9'>
 								<div>
 									<strong>${cap.title}</strong></div>
 									<div>${cap.summary}</div>

@@ -175,7 +175,7 @@ img.logo {
 .thumbnail .caption p:last-child {
     margin: 0;
 }
-.thumbnail .caption p.title {
+.thumbnail .caption p.title, .thumbnail .caption p.creator{
 	width: 100%;
     white-space: nowrap;
     overflow: hidden;
@@ -278,11 +278,19 @@ img.logo {
 }
 .etc-content .best-section .best-list,
 .video-content .best-section .best-list{
-	-webkit-padding-start: 2.3em;
+    -webkit-padding-start: 15px;
+    -webkit-padding-end: 15px;
+    padding-left: 15px;
+    padding-right: 15px;
 }
 .etc-content .best-section .best-list li,
 .video-content .best-section .best-list li{
 	margin-bottom: 3px;
+	width: 100%;
+	list-style-position: inside;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 .etc-content .best-section .best-list a,
 .video-content .best-section .best-list a{
@@ -296,15 +304,15 @@ img.logo {
 /*
 	content detail
 */
-.content-detail .content-title{
+.content-detail .content-title, .cap-content .content-title{
 	border-top: solid 1px #999; 
 	border-bottom: solid 1px #999; 
 	padding: 20px 20px;
 }
-.content-detail .content-body{
+.content-detail .content-body, .cap-content .content-body{
 	padding: 20px 20%;
 }
-.content-detail .content-footer{
+.content-detail .content-footer, .cap-content .content-footer{
 	overflow: hidden;
 	border-top: solid 2px #999; 
 	border-bottom: solid 1px #999; 
@@ -317,17 +325,17 @@ img.logo {
 	}
 }
 @media (max-device-width: 768px){
-	.content-detail {
+	.content-detail, .cap-content {
 		margin-left: -10px;
 	    margin-right: -10px;
 	}
-	.content-detail .content-title{
+	.content-detail .content-title, .cap-content .content-title{
 		padding:20px 5px;
 	}
-	.content-detail .content-body{
+	.content-detail .content-body, .cap-content .content-body{
 		padding:20px 0px;
 	}
-	.content-detail .content-footer{
+	.content-detail .content-footer, .cap-content .content-footer{
 		padding:20px 5px;
 	}
 }
@@ -338,7 +346,24 @@ img.logo {
 	}	
 	.cap-content .cap-category .main-category .item{
 		padding:5px;
-		font-size:1em;
+		font-size:10px;
+	}
+	.cap-content .cap-category .sub-category .item {
+		padding:5px;
+		font-size:10px;
+	}
+	.cap-content .cap-info .info-title {
+		font-size: 1.5em;
+	}
+	.cap-content .cap-info > .row {
+		font-size:10px;
+	}
+	.cap-content .cap-list {
+		margin-top: 10px;
+	}
+	.cap-content .cap-list hr {
+		margin-top: 10px;
+    	margin-bottom: 10px;
 	}
 }
 

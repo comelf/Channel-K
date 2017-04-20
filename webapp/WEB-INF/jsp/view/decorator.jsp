@@ -10,7 +10,7 @@
 	<meta name="author" content="">
 
 	<link href="/css/lib/bootstrap.min.css" rel="stylesheet">
-	<link href="/css/base.css?v=2017020501" rel="stylesheet">
+	<link href="/css/base.css?v=2017042001" rel="stylesheet">
 	<title><decorator:title default="TV 보다 살짝 더 재미있는 채널K" /></title>
 	<decorator:head />
 	<script>
@@ -37,7 +37,7 @@
         </div>
         <div class="navbar-body">
 	          <ul class="nav navbar-nav">
-	            <!-- <li><a href="/cap">캡-콘텐츠 연재중</a></li> -->
+	            <li><a href="/cap">캡-콘텐츠 연재중</a></li>
 	            <!-- <li><a href="/broadcast">현재 TV 방영중</a></li> -->
 	            <!-- <li><a href="/video">영상 컨텐츠</a></li> -->
 	            <li><a href="/etc/list">TV 캡 다시 보기</a></li>

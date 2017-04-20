@@ -100,7 +100,7 @@ public class AdminPageController {
     }
 	
 	@RequestMapping(value="/content/list", method=RequestMethod.GET)
-    public String capContentListPage(@RequestParam(defaultValue="1", required=false) int page, Model model) {
+    public String contentInfoListPage(@RequestParam(defaultValue="1", required=false) int page, Model model) {
 		
 		int start = (page - 1);
 		
@@ -345,6 +345,31 @@ public class AdminPageController {
         return "/admin/content/editCap";
     }
 	
+	@RequestMapping(value="/capcontent/list", method=RequestMethod.GET)
+    public String capContentListPage(@RequestParam(defaultValue="1", required=false) int page, Model model) {
+		
+		int start = (page - 1);
+		
+		Pageable pageable = new PageRequest(start, count);
+		
+		Page<CapContent> capContentPage = capContentRepo.findAll(pageable);
+		model.addAttribute("capContentList", capContentPage.getContent());
+		model.addAttribute("paging", new Paging(page, (int)capContentPage.getTotalElements(), count));
+        return "/admin/content/caplist";
+    }
+	
+	@RequestMapping(value="/capcontent/detail/{contentId}", method=RequestMethod.GET)
+    public String editCapContent(@PathVariable("contentId") Integer contentId, Model model, HttpSession session) {
+		List<ContentInfo> list = conInfoRepo.findAll();
+		List<ContentStatus> statusList = conStatusRepo.findAll();
+		model.addAttribute("contentInfoList", list);
+		model.addAttribute("contentStatusList", statusList);
+		
+		CapContent capContent = capContentRepo.findById(contentId);
+		model.addAttribute("capContent", capContent);
+        return "/admin/content/editCap";
+    }
+	
 	@RequestMapping(value="/capcontent/edit", method=RequestMethod.POST)
     public String editCapContent(CapContent capContent, @RequestParam(value="",required=false, defaultValue="true")Boolean cap,Model model, HttpSession session) {
 		List<ContentInfo> list = conInfoRepo.findByCap(cap);
@@ -398,6 +423,7 @@ public class AdminPageController {
 		cCapContet.setContent(capContent.getContent());
 		cCapContet.setContent(capContent.getContent());
 		cCapContet.setSummary(capContent.getSummary());
+		capContentRepo.saveAndFlush(cCapContet);
 		model.addAttribute("capContent", cCapContet);
         return "/admin/content/editCap";
     }

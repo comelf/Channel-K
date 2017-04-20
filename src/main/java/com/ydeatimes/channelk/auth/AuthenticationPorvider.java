@@ -17,7 +17,6 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import com.ydeatimes.channelk.web.model.User;
 import com.ydeatimes.channelk.web.repository.UserRepository;
-import com.ydeatimes.channelk.web.status.UserStatus;
 
 public class AuthenticationPorvider implements AuthenticationProvider {
 	private static final Logger LOG = LoggerFactory

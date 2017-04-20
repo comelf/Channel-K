@@ -14,7 +14,7 @@
 			</div>
 		</div>
 		
-		<%-- <div class="today-cap content-list">
+		<div class="today-cap content-list">
 			<div class="row section-head">
 				<div class="col-md-12">
 					<div>캡-콘텐츠 연재중</div>
@@ -22,32 +22,53 @@
 				</div>
 			</div>
 			<div class="row">
-				<c:forEach items="${ capList}"  var="cap" end="8">
+				<c:forEach items="${ capList }"  var="cap" end="7">
 					<div class='col-md-3  col-xs-6'>
 						<a href="/cap/content/page?number=${cap.id}">
-						<div class='thumbnail'>
-							<img src='${cap.thumbnail.getUrlPathWithQuality(0)}' height="100px" style="width: 100%;height: 180px;">
-							<div class='caption'>
-								<p>${cap.title}</p>
-								<p>캐스터 : 와이군</p>
+							<div class="thumbnail">
+								<div class="thumbnail-wrapper">
+									<div class="thumbnail-img" style="background-image: url(${cap.thumbnail.getUrlPathWithQuality(0)});"></div>
+								</div>
+								<div class='caption'>
+									<p class="title">${cap.title}</p>
+									<p class="creator">캐스터 : ${cap.user.user_name}</p>
+								</div>
 							</div>
-						</div>
 						</a>
 					</div>
 				</c:forEach>
 				
-				<c:forEach items="${ capList}"  var="cap" begin="8">
+				<c:forEach items="${ capList}"  var="cap" begin="8" end="12">
 					<div class='col-md-2  col-xs-4'>
-						<div class='thumbnail'>
-							<img src='${cap.thumbnail.getUrlPathWithQuality(0)}' height="100px" style="width: 100%;height: 130px;">
-							<div class='caption'>
-								<p>${cap.title}</p>
-								<p>캐스터 : 와이군</p>
+						<a href="/cap/content/page?number=${cap.id}">
+							<div class='thumbnail'>
+								<div class="thumbnail-wrapper">
+									<div class="thumbnail-img" style="background-image: url(${cap.thumbnail.getUrlPathWithQuality(0)});"></div>
+								</div>
+								<div class='caption'>
+									<p class="title">${cap.title}</p>
+									<p class="creator">캐스터 : ${cap.user.user_name}</p>
+								</div>
 							</div>
-						</div>
+						</a>
 					</div>
 				</c:forEach>
 			
+				<c:if test="${fn:length(capList) > 13}">
+					<div class='col-md-2  col-xs-4'>
+						<a href="/cap">
+						<div class='thumbnail'>
+							<div class="thumbnail-wrapper">
+								<div class="thumbnail-img thumbnail-more" style="background-image: url(${capList[13].thumbnail.getUrlPathWithQuality(0)})"></div>
+							</div>
+							<div class='caption'>
+								<p style="text-align: center; ">더보기</p>
+								<p style="height: 1.42857143em;"></p>
+							</div>
+						</div>
+						</a>
+					</div>
+				</c:if>
 				
 				<!-- <div class="col-md-3">
 					<div class="thumbnail">
@@ -58,7 +79,7 @@
 				    </div>
 				</div> -->
 			</div>
-		</div> --%>
+		</div>
 		
 		<!-- <div class="today-broadcast content-list">
 			<div class="row section-head">
@@ -112,7 +133,7 @@
 								</div>
 								<div class='caption'>
 									<p class="title">${etc.title}</p>
-									<p>캐스터 : ${etc.user.user_name}</p>
+									<p class="creator">캐스터 : ${etc.user.user_name}</p>
 								</div>
 							</div>
 						</a>
@@ -128,7 +149,7 @@
 							</div>
 							<div class='caption'>
 								<p class="title">${etc.title}</p>
-								<p>캐스터 : ${etc.user.user_name}</p>
+								<p class="creator">캐스터 : ${etc.user.user_name}</p>
 							</div>
 						</div>
 						</a>
@@ -181,7 +202,7 @@
 				var banner = banners[i];
 				var w = banner["sizeW"];
 				var h = banner["sizeH"];
-				var image 	= "url(/images/" + banner["image"] + ")";
+				var image 	= "url(" + banner["image"] + ")";
 				var title 	= banner["title"]
 				html += temp.replace(/\{height\}/g, h*cellW).replace(/\{width\}/g, w*cellH).replace("{image}", image).replace("{title}", title);
 			}
