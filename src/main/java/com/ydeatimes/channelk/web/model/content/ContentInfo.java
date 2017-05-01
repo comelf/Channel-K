@@ -51,6 +51,9 @@ public class ContentInfo {
 	@Transient
 	private int banner_id;
 	
+	@Transient
+	private String status_text;
+	
 	@ManyToOne
 	@JoinColumn(name="thumbnail_image_id", nullable=true)
 	private Image thumbnail;
@@ -63,6 +66,10 @@ public class ContentInfo {
 	@MapKey(name="meta_key")
 	private Map<String, ContentMeta> metas;
 
+	@ManyToOne
+	@JoinColumn(name="status_id", nullable=false)
+	private ContentStatus status;
+	
 	@Override
 	public String toString() {
 		return "ContentInfo [id=" + id + ", title=" + title + ", sub_title="

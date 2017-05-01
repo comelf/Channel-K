@@ -31,7 +31,12 @@ public class CapContentService {
 
 	public CapContent getContentById(int capNum) {
 		ContentStatus status = statusRepo.findByText(ContentStatus.OPEN);
-		return capContentRepo.findByIdAndStatus(capNum, status);
+		CapContent cap = capContentRepo.findByIdAndStatus(capNum, status);
+		if(cap != null){
+			cap.addView();
+			capContentRepo.saveAndFlush(cap);
+		}
+		return cap;
 	}
 
 	public Page<CapContent> getCapContentPageByInfo(ContentInfo info, Integer page) {

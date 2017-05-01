@@ -83,6 +83,15 @@
 		                					<form:option value="1">캡 있음</form:option>
 								    </form:select>
 		                		</div>
+		                		<div class="form-group">
+									<label>Status</label>
+								    <form:select path="status_text" cssClass="form-control">
+		                				<option value="0">선택하세요</option>
+		                				<c:forEach var="status" items="${contentStatusList}">
+		                					<option value="${status.text}" >${status.text}</option>
+		                				</c:forEach>
+								    </form:select>
+		                		</div>
 		                	</div>
 		                	<div class="col-md-6 content-metas">
 		                		

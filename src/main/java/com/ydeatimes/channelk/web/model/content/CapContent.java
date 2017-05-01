@@ -64,5 +64,9 @@ public class CapContent {
 		return "CapContent [id=" + id + ", title=" + title + ", summary="
 				+ summary + ", create_date=" + createDate + "]";
 	}
+
+	public void addView() {
+		this.views ++;
+	}
 	
 }

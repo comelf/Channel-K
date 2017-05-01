@@ -16,6 +16,7 @@ import com.ydeatimes.channelk.json.JSONArray;
 import com.ydeatimes.channelk.web.model.content.CapContent;
 import com.ydeatimes.channelk.web.model.content.ContentCategory;
 import com.ydeatimes.channelk.web.model.content.ContentInfo;
+import com.ydeatimes.channelk.web.model.content.ContentStatus;
 import com.ydeatimes.channelk.web.model.content.ContentType;
 import com.ydeatimes.channelk.web.model.content.ETCContent;
 import com.ydeatimes.channelk.web.model.content.MainTopImgInfo;
@@ -54,15 +55,15 @@ public class MainController {
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String indexPage(Model model) {
 		List<MainTopImgInfo> list = new ArrayList<MainTopImgInfo>();
-		list.add(new MainTopImgInfo("/img/poster/main_poster_fightclub_01.png", "", 4, 3));
-		list.add(new MainTopImgInfo("/img/poster/main_poster_thehangover_01.png", "", 4, 3));
-		list.add(new MainTopImgInfo("/img/poster/main_poster_thebeautyinside_01.png", "", 4, 3));
-		list.add(new MainTopImgInfo("/img/poster/main_poster_themist_01.png", "", 4, 3));
-		list.add(new MainTopImgInfo("/img/poster/main_poster_themartian_01.png", "", 4, 3));
-		list.add(new MainTopImgInfo("/img/poster/main_poster_district9_01.png", "", 2, 3));
-		list.add(new MainTopImgInfo("/img/poster/main_poster_devil_01.png", "", 2, 1));
-		list.add(new MainTopImgInfo("/img/poster/main_poster_cube_01.png", "", 2, 1));
-		list.add(new MainTopImgInfo("/img/poster/main_poster_parasyte_01.png", "", 2, 1));
+		list.add(new MainTopImgInfo("/img/poster/main_cf01.jpg", "", 4, 6));
+		list.add(new MainTopImgInfo("/img/poster/main_pm01.jpg", "", 4, 6));
+		list.add(new MainTopImgInfo("/img/poster/main_gv01.jpg", "", 4, 6));
+//		list.add(new MainTopImgInfo("/img/poster/main_poster_themist_01.png", "", 4, 3));
+//		list.add(new MainTopImgInfo("/img/poster/main_poster_themartian_01.png", "", 4, 3));
+//		list.add(new MainTopImgInfo("/img/poster/main_poster_district9_01.png", "", 2, 3));
+//		list.add(new MainTopImgInfo("/img/poster/main_poster_devil_01.png", "", 2, 1));
+//		list.add(new MainTopImgInfo("/img/poster/main_poster_cube_01.png", "", 2, 1));
+//		list.add(new MainTopImgInfo("/img/poster/main_poster_parasyte_01.png", "", 2, 1));
 		model.addAttribute("mainTop", new JSONArray(list));
 
 		model.addAttribute("capList", capContent.getCapContentListForMain());
@@ -79,6 +80,7 @@ public class MainController {
 
 		List<ContentCategory> categorys = caontentCategoryRepo.findAll();
 		List<ContentType> contentType = contentTypeRepo.findAll();
+		ContentStatus status = statusRepo.findByText(ContentStatus.OPEN);
 		List<ContentInfo> infoList = null;
 
 		model.addAttribute("contentType", contentType);
@@ -86,54 +88,14 @@ public class MainController {
 
 		if (categoryId > 0) {
 			ContentCategory category = caontentCategoryRepo.findById(categoryId);
-			infoList = conInfoRepo.findTop15ByCapAndCategoryOrderByIdDesc(true, category);
+			infoList = conInfoRepo.findTop15ByCapAndCategoryAndStatusOrderByIdDesc(true, category, status);
 		} else if (categoryType > 0) {
 			ContentType type = contentTypeRepo.findById(categoryType);
-			infoList = conInfoRepo.findTop15ByCapAndTypeOrderByIdDesc(true, type);
+			infoList = conInfoRepo.findTop15ByCapAndTypeAndStatusOrderByIdDesc(true, type, status);
 		} else {
-			infoList = conInfoRepo.findTop15ByCapOrderByIdDesc(true);
+			infoList = conInfoRepo.findTop15ByCapAndStatusOrderByIdDesc(true, status);
 		}
 		model.addAttribute("capList", infoList);
-
-		// List<MainTopImgInfo> capList = new ArrayList<MainTopImgInfo>();
-		// capList.add(new MainTopImgInfo("/images/003cap/8월의크리스마스.jpg",
-		// "8월의크리스마스", 0, 0));
-		// capList.add(new MainTopImgInfo("/images/003cap/관상.jpg", "관상",
-		// 0, 0));
-		// capList.add(new MainTopImgInfo("/images/003cap/그래비티.jpg",
-		// "그래비티", 0, 0));
-		//
-		// model.addAttribute("capList", capList);
-		// List<MainTopImgInfo> capsubList = new ArrayList<MainTopImgInfo>();
-		// capsubList.add(new MainTopImgInfo("/images/003cap/기동전사
-		// 건담.jpg", "기동전사 건ᄃ", 0, 0));
-		// capsubList.add(new MainTopImgInfo("/images/003cap/기생수.jpg",
-		// "기생수", 0, 0));
-		// capsubList.add(new MainTopImgInfo("/images/003cap/나비효과.jpg",
-		// "나비효과", 0, 0));
-		// capsubList.add(new
-		// MainTopImgInfo("/images/003cap/달콤살벌한연인.gif",
-		// "달콤살벌한연인", 0, 0));
-		// capsubList.add(new
-		// MainTopImgInfo("/images/003cap/달콤한인생.jpg",
-		// "달콤한인생", 0, 0));
-		// capsubList.add(new MainTopImgInfo("/images/003cap/러브레터.jpg",
-		// "러브레터", 0, 0));
-		// capsubList.add(new MainTopImgInfo("/images/003cap/백투더퓨처.jpg",
-		// "백투더퓨처", 0, 0));
-		// capsubList.add(new MainTopImgInfo("/images/003cap/뷰티인사이드.jpg",
-		// "뷰티인사이드", 0, 0));
-		// capsubList.add(new MainTopImgInfo("/images/003cap/식스센스.jpg",
-		// "식스센스", 0, 0));
-		// capsubList.add(new MainTopImgInfo("/images/003cap/파이트클럽.jpg",
-		// "파이트클럽", 0, 0));
-		// capsubList.add(new
-		// MainTopImgInfo("/images/003cap/프로메테우스(인셉션대신).jpg",
-		// "프로메테우스", 0, 0));
-		// capsubList.add(new
-		// MainTopImgInfo("/images/003cap/양들의침묵.jpg", "양들의침묵", 0, 0));
-		//
-		// model.addAttribute("capsubList", capsubList);
 		return "/view/cap/list";
 	}
 

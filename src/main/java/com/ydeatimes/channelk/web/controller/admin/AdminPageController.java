@@ -12,6 +12,7 @@ import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -80,6 +81,9 @@ public class AdminPageController {
 	@Autowired
 	TopBannerRepository topBannerRepo;
 	
+	@Autowired
+	ContentStatusRepository statusRepo;
+	
 	@RequestMapping(value="/main/topbanner", method=RequestMethod.GET)
     public String topBanner(Model model) {
 		List<TopBanner> list = topBannerRepo.findAll();
@@ -101,11 +105,8 @@ public class AdminPageController {
 	
 	@RequestMapping(value="/content/list", method=RequestMethod.GET)
     public String contentInfoListPage(@RequestParam(defaultValue="1", required=false) int page, Model model) {
-		
 		int start = (page - 1);
-		
-		Pageable pageable = new PageRequest(start, count);
-		
+		Pageable pageable = new PageRequest(start, count, Direction.DESC, "id");
 		Page<ContentInfo> contentInfoList = conInfoRepo.findAll(pageable);
 		model.addAttribute("contentInfoList", contentInfoList.getContent());
 		model.addAttribute("paging", new Paging(page, (int)contentInfoList.getTotalElements(), count));
@@ -120,6 +121,8 @@ public class AdminPageController {
 		if(contentInfo == null){
 			throw new NotFoundException();
 		}
+		List<ContentStatus> statusList = conStatusRepo.findAll();
+		model.addAttribute("contentStatusList", statusList);
 		model.addAttribute("contentTypes", conTypeRepo.findAll());
 		model.addAttribute("contentCatetories", conCategoryRepo.findAll());
 		model.addAttribute("contentInfo", contentInfo);
@@ -131,6 +134,8 @@ public class AdminPageController {
     public String addContentInfoPage(Model model) {
 		model.addAttribute("contentTypes", conTypeRepo.findAll());
 		model.addAttribute("contentCatetories", conCategoryRepo.findAll());
+		List<ContentStatus> statusList = conStatusRepo.findAll();
+		model.addAttribute("contentStatusList", statusList);
 		ContentInfo info = new ContentInfo();
 		model.addAttribute("contentInfo", info);
         return "/admin/content/add";
@@ -161,6 +166,9 @@ public class AdminPageController {
 		ContentCategory category = conCategoryRepo.findById(info.getContentCategoryId());
 		info.setCategory(category);
 		
+		ContentStatus status = statusRepo.findByText(info.getStatus_text());
+		info.setStatus(status);
+		
 		Map<String, ContentMeta> metaMap = info.getMetas();
 		
 		conInfoRepo.saveAndFlush(info);
@@ -175,7 +183,8 @@ public class AdminPageController {
 				conMetaRepo.save(meta);
 			}
 		}
-		
+		List<ContentStatus> statusList = conStatusRepo.findAll();
+		model.addAttribute("contentStatusList", statusList);
 		model.addAttribute("contentTypes", conTypeRepo.findAll());
 		model.addAttribute("contentCatetories", conCategoryRepo.findAll());
 		model.addAttribute("contentInfo", info);
@@ -186,7 +195,8 @@ public class AdminPageController {
     public String addCapContentEdit(ContentInfo info  ,Model model) {
 		int infoId = info.getId();
 		ContentInfo cInfo =  conInfoRepo.findById(infoId);
-		
+		List<ContentStatus> statusList = conStatusRepo.findAll();
+		model.addAttribute("contentStatusList", statusList);
 		int bannerId = info.getBanner_id();
 		if(bannerId > 0){
 			Image image = imageRepo.findById(bannerId);
@@ -205,6 +215,9 @@ public class AdminPageController {
 		
 		ContentCategory category = conCategoryRepo.findById(info.getContentCategoryId());
 		cInfo.setCategory(category);
+		
+		ContentStatus status = statusRepo.findByText(info.getStatus_text());
+		cInfo.setStatus(status);
 		
 		Map<String, ContentMeta> metaMap = info.getMetas();
 		
@@ -226,7 +239,7 @@ public class AdminPageController {
 				cMetaInfo.setMeta_value(meta.getMeta_value());
 			}
 		}
-		
+		conInfoRepo.saveAndFlush(cInfo);
 		model.addAttribute("contentTypes", conTypeRepo.findAll());
 		model.addAttribute("contentCatetories", conCategoryRepo.findAll());
 		model.addAttribute("contentInfo", cInfo);
@@ -347,10 +360,8 @@ public class AdminPageController {
 	
 	@RequestMapping(value="/capcontent/list", method=RequestMethod.GET)
     public String capContentListPage(@RequestParam(defaultValue="1", required=false) int page, Model model) {
-		
 		int start = (page - 1);
-		
-		Pageable pageable = new PageRequest(start, count);
+		Pageable pageable = new PageRequest(start, count, Direction.DESC, "id");
 		
 		Page<CapContent> capContentPage = capContentRepo.findAll(pageable);
 		model.addAttribute("capContentList", capContentPage.getContent());
@@ -443,7 +454,7 @@ public class AdminPageController {
 		
 		int start = (page - 1);
 		
-		Pageable pageable = new PageRequest(start, count);
+		Pageable pageable = new PageRequest(start, count, Direction.DESC, "id");
 		
 		Page<ETCContent> contentInfoList = etcContentRepo.findAll(pageable);
 		model.addAttribute("etcContentList", contentInfoList.getContent());

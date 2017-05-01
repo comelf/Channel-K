@@ -65,6 +65,7 @@
 															<th>회차정보</th>
 															<th>시간</th>
 															<th>종류</th>
+															<th>Status</th>
 														</tr>
 													</thead>
 													<tbody>
@@ -81,6 +82,7 @@
 																<td>${row.episode}</td>
 																<td>${row.time}</td>
 																<td>${row.type.text}</td>
+																<td>${row.status.text}</td>
 															</tr>
 														</c:forEach>
 													</tbody>

@@ -8,7 +8,7 @@
 		<div class="row">
 			<div class="col-md-7 col-xs-12 cap-banner thumbnail">
 				<div class="thumbnail-wrapper" style="padding-top: 50%;">
-					<div class="thumbnail-img" style="background-image: url(${info.thumbnail.getUrlPathWithQuality(0) });"></div>
+					<div class="thumbnail-img" style="background-image: url(${info.banner.getUrlPathWithQuality(0) });"></div>
 				</div>
 			</div>
 			<div class="col-md-5 col-xs-12 cap-info">
