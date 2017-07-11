@@ -196,15 +196,16 @@
 			var cellW = topBanner.width() / 12;
 			var cellH = topBanner.width() * 0.45 / 6;
 
-			var temp = "<div class='brick' style='width:{width}px; height: {height}px; background-Image: {image}'><div class='cover'>{title}</div></div>";
+			var temp = "<div class='brick' style='width:{width}px; height: {height}px; background-Image: {image}' {link}><div class='cover'>{title}</div></div>";
 			var w = 1, h = 1, html = '', color = '', limitItem = banners.length;
 			for (var i = 0; i < limitItem; ++i) {
 				var banner = banners[i];
 				var w = banner["sizeW"];
 				var h = banner["sizeH"];
 				var image 	= "url(" + banner["image"] + ")";
-				var title 	= banner["title"]
-				html += temp.replace(/\{height\}/g, h*cellW).replace(/\{width\}/g, w*cellH).replace("{image}", image).replace("{title}", title);
+				var title 	= banner["title"];
+				var link		= banner["link"];
+				html += temp.replace(/\{height\}/g, h*cellW).replace(/\{width\}/g, w*cellH).replace("{image}", image).replace("{title}", title).replace("{link}", (link) ? 'onclick="location.href=\''+link+'\'"' : '' );
 			}
 			$("#top-banner").html(html);
 		
@@ -221,7 +222,7 @@
 						var pHeight = pWidth * 0.45;
 						topBanner.height(pHeight + 10);
 						wall.refresh(pWidth, pHeight);
-					}
+					},
 				});	
 				
 				var pWidth = topBanner.width();

@@ -2,6 +2,8 @@ package com.ydeatimes.channelk.web.repository;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -41,5 +43,13 @@ public interface ContentInfoRepository extends JpaRepository<ContentInfo,  Integ
 			ContentStatus status);
 
 	List<ContentInfo> findTop15ByCapAndTypeAndStatusOrderByIdDesc(boolean cap, ContentType type, ContentStatus status);
+
+	
+	Page<ContentInfo> findByCapAndCategoryAndStatus(boolean b, ContentCategory category, ContentStatus status,
+			Pageable pageable);
+
+	Page<ContentInfo> findByCapAndTypeAndStatus(boolean b, ContentType type, ContentStatus status, Pageable pageable);
+
+	Page<ContentInfo> findByCapAndStatus(boolean b, ContentStatus status, Pageable pageable);
 
 }

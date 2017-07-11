@@ -16,23 +16,19 @@ import com.ydeatimes.channelk.json.JSONArray;
 import com.ydeatimes.channelk.web.model.content.CapContent;
 import com.ydeatimes.channelk.web.model.content.ContentCategory;
 import com.ydeatimes.channelk.web.model.content.ContentInfo;
-import com.ydeatimes.channelk.web.model.content.ContentStatus;
 import com.ydeatimes.channelk.web.model.content.ContentType;
 import com.ydeatimes.channelk.web.model.content.ETCContent;
 import com.ydeatimes.channelk.web.model.content.MainTopImgInfo;
 import com.ydeatimes.channelk.web.repository.ContentCategoryRepository;
-import com.ydeatimes.channelk.web.repository.ContentInfoRepository;
 import com.ydeatimes.channelk.web.repository.ContentStatusRepository;
 import com.ydeatimes.channelk.web.repository.ContentTypeRepository;
+import com.ydeatimes.channelk.web.service.CapContentInfoService;
 import com.ydeatimes.channelk.web.service.CapContentService;
 import com.ydeatimes.channelk.web.service.EtcContentService;
 import com.ydeatimes.channelk.web.util.Paging;
 
 @Controller
 public class MainController {
-
-	@Autowired
-	ContentInfoRepository conInfoRepo;
 
 	@Autowired
 	ContentCategoryRepository caontentCategoryRepo;
@@ -51,13 +47,16 @@ public class MainController {
 
 	@Autowired
 	CapContentService capContent;
+	
+	@Autowired
+	CapContentInfoService capInfo;
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String indexPage(Model model) {
 		List<MainTopImgInfo> list = new ArrayList<MainTopImgInfo>();
-		list.add(new MainTopImgInfo("/img/poster/main_cf01.jpg", "", 4, 6));
-		list.add(new MainTopImgInfo("/img/poster/main_pm01.jpg", "", 4, 6));
-		list.add(new MainTopImgInfo("/img/poster/main_gv01.jpg", "", 4, 6));
+		list.add(new MainTopImgInfo("/img/poster/main_06_01.jpg", "", 4, 6 , "http://channel-k.com/cap/content/page?number=10049"));
+		list.add(new MainTopImgInfo("/img/poster/main_06_02.jpg", "", 4, 6, "http://channel-k.com/cap/content/page?number=10208 "));
+		list.add(new MainTopImgInfo("/img/poster/main_06_03.jpg", "", 4, 6, "http://channel-k.com/cap/content/page?number=10371 "));
 //		list.add(new MainTopImgInfo("/img/poster/main_poster_themist_01.png", "", 4, 3));
 //		list.add(new MainTopImgInfo("/img/poster/main_poster_themartian_01.png", "", 4, 3));
 //		list.add(new MainTopImgInfo("/img/poster/main_poster_district9_01.png", "", 2, 3));
@@ -76,38 +75,35 @@ public class MainController {
 	@RequestMapping(value = "/cap", method = RequestMethod.GET)
 	public String capContentList(
 			@RequestParam(value = "category", required = false, defaultValue = "0") Integer categoryId,
-			@RequestParam(value = "type", required = false, defaultValue = "0") Integer categoryType, Model model) {
+			@RequestParam(value = "type", required = false, defaultValue = "0") Integer categoryType, 
+			@RequestParam(value = "page", required = false, defaultValue = "1") Integer page,
+			Model model) {
 
 		List<ContentCategory> categorys = caontentCategoryRepo.findAll();
 		List<ContentType> contentType = contentTypeRepo.findAll();
-		ContentStatus status = statusRepo.findByText(ContentStatus.OPEN);
-		List<ContentInfo> infoList = null;
-
+		
 		model.addAttribute("contentType", contentType);
 		model.addAttribute("categorys", categorys);
-
-		if (categoryId > 0) {
-			ContentCategory category = caontentCategoryRepo.findById(categoryId);
-			infoList = conInfoRepo.findTop15ByCapAndCategoryAndStatusOrderByIdDesc(true, category, status);
-		} else if (categoryType > 0) {
-			ContentType type = contentTypeRepo.findById(categoryType);
-			infoList = conInfoRepo.findTop15ByCapAndTypeAndStatusOrderByIdDesc(true, type, status);
-		} else {
-			infoList = conInfoRepo.findTop15ByCapAndStatusOrderByIdDesc(true, status);
-		}
-		model.addAttribute("capList", infoList);
+		
+		model.addAttribute("category", categoryId);
+		model.addAttribute("type", categoryType);
+		
+		Page<ContentInfo> capPage = capInfo.getCapInfo(categoryId, categoryType  , page);
+		model.addAttribute("capList", capPage.getContent());
+		model.addAttribute("paging", new Paging(capPage.getNumber() + 1, (int) capPage.getTotalElements(), capPage.getSize()));
 		return "/view/cap/list";
 	}
 
 	@RequestMapping(value = "/cap/content", method = RequestMethod.GET)
 	public String capContentInfo(@RequestParam(value = "id") int contentId, @RequestParam(value = "page", required = false, defaultValue = "1") Integer page, Model model) {
 
-		ContentInfo info = conInfoRepo.findById(contentId);
+		ContentInfo info = capInfo.getByContentId(contentId);
 		model.addAttribute("info", info);
 		Page<CapContent> capPage = capContent.getCapContentPageByInfo(info, page);
 		model.addAttribute("capContent", capPage.getContent());
 		model.addAttribute("paging", new Paging(capPage.getNumber() + 1, (int) capPage.getTotalElements(), capPage.getSize()));
 		
+		model.addAttribute("contentId", contentId);
 		if (info.getType().getText().equals(ContentType.MOVIE)) {
 			return "/view/cap/movie";
 		} else {

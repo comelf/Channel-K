@@ -24,7 +24,7 @@
 						</div>
 					</c:forEach>
 				</div>
-				<c:if test="${paging.totalCount > 16}">
+				<c:if test="${paging.totalCount > 15}">
 					<div class="row center">
 						<div class="col-md-12 text-center">
 							<ul class="pagination">

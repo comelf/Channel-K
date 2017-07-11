@@ -32,14 +32,14 @@
 							</div>
 							<div class='caption'>
 								<p class="title">${cap.title}</p>
-								<p class="creator">캐스터 : 와이군</p>
+								<p class="creator">캐스터 : 마스터K</p>
 							</div>
 						</div>
 						</a>
 					</div>
 				</c:forEach>
 				
-				<c:forEach items="${ capList}"  var="cap" begin="2">
+				<c:forEach items="${ capList}"  var="cap" begin="3">
 					<div class='col-md-3 col-xs-6'>
 						<a href="/cap/content?id=${cap.id}">
 						<div class='thumbnail'>
@@ -48,7 +48,7 @@
 							</div>
 							<div class="caption">
 								<p class="title">${cap.title}</p>
-								<p class="creator">캐스터 : 와이군</p>
+								<p class="creator">캐스터 : 마스터K</p>
 							</div>
 						</div>
 						</a>
@@ -56,6 +56,40 @@
 				</c:forEach>
 				
 			</div>
+			<c:if test="${paging.totalCount > 16}">
+				<div class="row center">
+					<div class="col-md-12 text-center">
+						<ul class="pagination">
+							<c:if test="${paging.firstPageNo < paging.startPageNo}">
+								<c:choose>
+									<c:when test="${category > 0}"><li><a href="/cap?category=${category}&page=${paging.startPageNo-1}">«</a></li></c:when>
+									<c:when test="${type > 0}"><li><a href="/cap?type=${type}&page=${paging.startPageNo-1}">«</a></li></c:when>
+									<c:otherwise><li><a href="/cap?page=${paging.startPageNo-1}">«</a></li></c:otherwise>
+								</c:choose>
+							</c:if>
+						  	<c:forEach var="pageNum" begin="${paging.startPageNo}" step="1" end="${paging.endPageNo}">
+						  		<c:choose>
+						  			<c:when test="${paging.pageNo eq pageNum}"><li class="active"></c:when>
+						  			<c:otherwise><li></c:otherwise>
+						  		</c:choose>
+						  		
+						  		<c:choose>
+									<c:when test="${category > 0}"><a href="/cap?category=${category}&page=${pageNum}">${pageNum}</a></li></c:when>
+									<c:when test="${type > 0}"><a href="/cap?type=${type}&page=${pageNum}">${pageNum}</a></li></c:when>
+									<c:otherwise><a href="/cap?page=${pageNum}">${pageNum}</a></li></c:otherwise>
+								</c:choose>
+						  	</c:forEach>
+						  	<c:if test="${paging.endPageNo < paging.finalPageNo}">
+						  		<c:choose>
+									<c:when test="${category > 0}"><li><a href="/cap?category=${category}&page=${paging.startPageNo+1}">»</a></li></c:when>
+									<c:when test="${type > 0}"><li><a href="/cap?type=${type}&page=${paging.startPageNo+1}">»</a></li></c:when>
+									<c:otherwise><li><a href="/cap?page=${paging.startPageNo+1}">»</a></li></c:otherwise>
+								</c:choose>
+							</c:if>
+						</ul>
+					</div>
+				</div>
+			</c:if>
 		</div>
 	</div>	
 <!-- 	

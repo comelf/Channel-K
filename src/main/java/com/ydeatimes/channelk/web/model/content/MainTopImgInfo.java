@@ -10,12 +10,14 @@ public class MainTopImgInfo {
 	private String title;
 	private int sizeW;
 	private int sizeH;
+	private String link;
 	
-	public MainTopImgInfo(String image, String title, int sizeW, int sizeH){
+	public MainTopImgInfo(String image, String title, int sizeW, int sizeH, String link){
 		this.image = image;
 		this.title = title;
 		this.sizeH = sizeH;
 		this.sizeW = sizeW;
+		this.link = link;
 	}
 
 	@Override
