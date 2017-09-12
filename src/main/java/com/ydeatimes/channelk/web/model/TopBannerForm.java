@@ -1,7 +1,5 @@
 package com.ydeatimes.channelk.web.model;
 
-import java.util.List;
-
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -9,11 +7,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class TopBannerForm {
 	
-	public List<String> name;
-
-	@Override
-	public String toString() {
-		return "TopBannerForm [name=" + name + "]";
-	}
+	private int id;
+	
+	private int banner_image_id;
+	
+	private String link;
+	
+	private String caption;
 	
 }

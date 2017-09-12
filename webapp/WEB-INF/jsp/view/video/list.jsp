@@ -4,6 +4,7 @@
 <!DOCTYPE html>
 <html>
 <body>
+<div class="container deco-body">
 	<div class="video-content">
 		<div class="col-md-8 col-sm-12">
 			<div class="row">
@@ -53,6 +54,7 @@
 			</div>
 		</div>
 	</div>	
+</div>
 <!-- 	
 	
 	

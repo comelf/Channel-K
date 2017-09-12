@@ -2,6 +2,7 @@ package com.ydeatimes.channelk.core;
 
 import java.util.Properties;
 
+import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
@@ -52,8 +53,12 @@ public class ApplicationConfig {
 		JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
 		em.setJpaVendorAdapter(vendorAdapter);
 		em.setJpaProperties(additionalProperties());
-
 		return em;
+	}
+	
+	@Bean(name="enManager")
+	public EntityManager enManager(){
+		return entityManagerFactory().getObject().createEntityManager();
 	}
 
 	@Bean

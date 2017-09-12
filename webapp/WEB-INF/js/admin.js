@@ -145,7 +145,7 @@ ContentInfo = {
 	contentTypeChange : function(e){
 		var target = $(e.target);
 		var type = target.val();
-		console.log(type);
+		
 		var source;
 		if( type === '1'){
 			source = $("#drama-meta-template").html();
@@ -154,7 +154,6 @@ ContentInfo = {
 		}
 
 		$('.content-metas').html(source);
-		
 	}
 	
 };

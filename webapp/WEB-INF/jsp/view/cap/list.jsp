@@ -4,6 +4,7 @@
 <!DOCTYPE html>
 <html>
 <body>
+<div class="container deco-body">
 	<div class="cap-content">
 		<div class="row cap-category">
 			<div class="col-md-12">
@@ -92,6 +93,7 @@
 			</c:if>
 		</div>
 	</div>	
+</div>
 <!-- 	
 	
 	

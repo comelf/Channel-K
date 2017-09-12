@@ -22,6 +22,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ydeatimes.channelk.auth.UserDetail;
+import com.ydeatimes.channelk.web.model.MainContent;
+import com.ydeatimes.channelk.web.model.MainPageContents;
 import com.ydeatimes.channelk.web.model.TopBanner;
 import com.ydeatimes.channelk.web.model.TopBannerForm;
 import com.ydeatimes.channelk.web.model.User;
@@ -41,8 +43,8 @@ import com.ydeatimes.channelk.web.repository.ContentStatusRepository;
 import com.ydeatimes.channelk.web.repository.ContentTypeRepository;
 import com.ydeatimes.channelk.web.repository.ETCContentRepository;
 import com.ydeatimes.channelk.web.repository.ImageRepository;
-import com.ydeatimes.channelk.web.repository.TopBannerRepository;
 import com.ydeatimes.channelk.web.repository.UserRepository;
+import com.ydeatimes.channelk.web.service.MainPageService;
 import com.ydeatimes.channelk.web.util.Paging;
 
 @Controller
@@ -78,15 +80,18 @@ public class AdminPageController {
 	@Autowired
 	ETCContentRepository etcContentRepo;
 	
+//	@Autowired
+//	TopBannerRepository topBannerRepo;
+	
 	@Autowired
-	TopBannerRepository topBannerRepo;
+	MainPageService mainPage;
 	
 	@Autowired
 	ContentStatusRepository statusRepo;
 	
 	@RequestMapping(value="/main/topbanner", method=RequestMethod.GET)
     public String topBanner(Model model) {
-		List<TopBanner> list = topBannerRepo.findAll();
+		List<TopBanner> list = mainPage.getAllBanner();
 		model.addAttribute("topList", list);
 		model.addAttribute("topForm", new TopBannerForm());
         return "/admin/main/top";
@@ -94,13 +99,56 @@ public class AdminPageController {
 	
 	@RequestMapping(value="/main/topbanner/edit", method=RequestMethod.POST)
     public String topBannerEdit(TopBannerForm topForm, Model model) {
-		
-		System.out.println(topForm);
-		
-		List<TopBanner> list = topBannerRepo.findAll();
+		if(!mainPage.updateBanner(topForm)){
+			model.addAttribute("msg", "수정 할 수 없습니다.");
+		}
+		List<TopBanner> list = mainPage.getAllBanner();
 		model.addAttribute("topList", list);
 		model.addAttribute("topForm", new TopBannerForm());
 		return "/admin/main/top";
+    }
+	
+	@RequestMapping(value="/main/topbanner/delete/{bannerId}", method=RequestMethod.DELETE)
+    public String topBannerDelete(@PathVariable("bannerId")Integer bannerId, Model model) {
+		System.out.println(bannerId);
+		mainPage.deleteById(bannerId);
+		List<TopBanner> list = mainPage.getAllBanner();
+		model.addAttribute("topList", list);
+		model.addAttribute("topForm", new TopBannerForm());
+		return "/admin/main/top";
+    }
+	
+	@RequestMapping(value="/main/topbanner/add", method=RequestMethod.POST)
+    public String topBannerAdd(TopBannerForm topForm, Model model) {
+		if(!mainPage.saveNewBanner(topForm)){
+			model.addAttribute("msg", "저장할 수 없습니다.");
+		}
+		List<TopBanner> list = mainPage.getAllBanner();
+		model.addAttribute("topList", list);
+		model.addAttribute("topForm", new TopBannerForm());
+		return "/admin/main/top";
+    }
+	
+	@RequestMapping(value="/main/mainpage", method=RequestMethod.GET)
+    public String mainPageContentEdit(Model model) {
+		MainPageContents mpc = new MainPageContents();
+		mpc.setRecently(mainPage.getOneRecentlyContent());
+		mpc.setComing(mainPage.getAllComingContent());
+		mpc.setRecomend(mainPage.getAllRecommendContent());
+		model.addAttribute("mpc", mpc);
+        return "/admin/main/mainpage";
+    }
+	
+	@RequestMapping(value="/main/mainpage", method=RequestMethod.POST)
+    public String topBannerAdd(MainPageContents mpc, Model model) {
+		if(!mainPage.saveMainPageContents(mpc)){
+			model.addAttribute("msg", "저장할 수 없습니다.");
+		}
+		mpc.setRecently(mainPage.getOneRecentlyContent());
+		mpc.setComing(mainPage.getAllComingContent());
+		mpc.setRecomend(mainPage.getAllRecommendContent());
+		model.addAttribute("mpc", mpc);
+        return "/admin/main/mainpage";
     }
 	
 	@RequestMapping(value="/content/list", method=RequestMethod.GET)

@@ -4,6 +4,7 @@
 <!DOCTYPE html>
 <html>
 <body>
+<div class="container deco-body">
 	<div class="etc-content">
 		<div class="etc-list row">
 			<div class="col-md-9 col-sm-12">
@@ -61,7 +62,7 @@
 			</div>
 		</div>
 	</div>
-	
+</div>
 	<content tag="local_script">
 	<!-- 
 	<script type="text/javascript">

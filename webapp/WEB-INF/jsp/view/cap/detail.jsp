@@ -4,6 +4,7 @@
 <!DOCTYPE html>
 <html>
 <body>
+<div class="container deco-body">
 	<div class="cap-content">
 		<div class="row">
 				<div class="col-md-12 content-title" >
@@ -46,7 +47,7 @@
 			</div>
 		</div>
 	</div>	
-	
+</div>	
 <!-- 	
 	
 	

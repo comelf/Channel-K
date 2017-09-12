@@ -4,6 +4,7 @@
 <!DOCTYPE html>
 <html>
 <body>
+<div class="container deco-body">
 	<div class="cap-page">
 		<div class="row">
 			<div class="col-md-12 " style="text-align: center;">
@@ -14,6 +15,7 @@
 				</div>
 		</div>
 	</div>	
+</div>
 <!-- 	
 	
 	

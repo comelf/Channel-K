@@ -52,4 +52,7 @@ public interface ContentInfoRepository extends JpaRepository<ContentInfo,  Integ
 
 	Page<ContentInfo> findByCapAndStatus(boolean b, ContentStatus status, Pageable pageable);
 
+//	@Query("select i from content_info i GROUP BY i.id ORDER BY i.contents.id DESC")
+//	Page<ContentInfo> findByStatusGroupByInfo(@Param("status")ContentStatus status, Pageable pageable);
+
 }

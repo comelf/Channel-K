@@ -1,5 +1,6 @@
 package com.ydeatimes.channelk.web.model.content;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.persistence.CascadeType;
@@ -69,6 +70,10 @@ public class ContentInfo {
 	@ManyToOne
 	@JoinColumn(name="status_id", nullable=false)
 	private ContentStatus status;
+	
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name = "info")
+	private List<CapContent> contents;
 	
 	@Override
 	public String toString() {

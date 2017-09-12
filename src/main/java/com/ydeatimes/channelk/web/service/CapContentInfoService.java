@@ -5,6 +5,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import com.ydeatimes.channelk.web.model.content.ContentCategory;
@@ -52,6 +54,11 @@ public class CapContentInfoService {
 	public ContentInfo getByContentId(int contentId) {
 		return conInfoRepo.findById(contentId);
 	}
-	
+
+//	public Page<ContentInfo> getCapInfoForMain() {
+//		ContentStatus status = statusRepo.findByText(ContentStatus.OPEN);
+//		Pageable pageable = new PageRequest(0, 7);
+//		return conInfoRepo.findInfoByStatusGroupByInfo(status, pageable);
+//	}
 	
 }

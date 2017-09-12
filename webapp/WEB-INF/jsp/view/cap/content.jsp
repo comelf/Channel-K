@@ -4,6 +4,7 @@
 <!DOCTYPE html>
 <html>
 <body>
+<div class="container deco-body">
 	<div class="cap-content">
 		<div class="row">
 			<div class="col-md-7 cap-banner">
@@ -81,7 +82,8 @@
 				</div>
 			</div>
 		</div>
-	</div>	
+	</div>
+</div>	
 <!-- 	
 	
 	

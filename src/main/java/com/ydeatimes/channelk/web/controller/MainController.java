@@ -1,6 +1,5 @@
 package com.ydeatimes.channelk.web.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,19 +11,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.ydeatimes.channelk.json.JSONArray;
 import com.ydeatimes.channelk.web.model.content.CapContent;
 import com.ydeatimes.channelk.web.model.content.ContentCategory;
 import com.ydeatimes.channelk.web.model.content.ContentInfo;
 import com.ydeatimes.channelk.web.model.content.ContentType;
 import com.ydeatimes.channelk.web.model.content.ETCContent;
-import com.ydeatimes.channelk.web.model.content.MainTopImgInfo;
 import com.ydeatimes.channelk.web.repository.ContentCategoryRepository;
 import com.ydeatimes.channelk.web.repository.ContentStatusRepository;
 import com.ydeatimes.channelk.web.repository.ContentTypeRepository;
+import com.ydeatimes.channelk.web.repository.MainContentRepository;
 import com.ydeatimes.channelk.web.service.CapContentInfoService;
 import com.ydeatimes.channelk.web.service.CapContentService;
 import com.ydeatimes.channelk.web.service.EtcContentService;
+import com.ydeatimes.channelk.web.service.MainPageService;
 import com.ydeatimes.channelk.web.util.Paging;
 
 @Controller
@@ -50,25 +49,18 @@ public class MainController {
 	
 	@Autowired
 	CapContentInfoService capInfo;
+	
+	@Autowired
+	MainPageService mainPage;
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String indexPage(Model model) {
-		List<MainTopImgInfo> list = new ArrayList<MainTopImgInfo>();
-		list.add(new MainTopImgInfo("/img/poster/main_06_01.jpg", "", 4, 6 , "http://channel-k.com/cap/content/page?number=10049"));
-		list.add(new MainTopImgInfo("/img/poster/main_06_02.jpg", "", 4, 6, "http://channel-k.com/cap/content/page?number=10208 "));
-		list.add(new MainTopImgInfo("/img/poster/main_06_03.jpg", "", 4, 6, "http://channel-k.com/cap/content/page?number=10371 "));
-//		list.add(new MainTopImgInfo("/img/poster/main_poster_themist_01.png", "", 4, 3));
-//		list.add(new MainTopImgInfo("/img/poster/main_poster_themartian_01.png", "", 4, 3));
-//		list.add(new MainTopImgInfo("/img/poster/main_poster_district9_01.png", "", 2, 3));
-//		list.add(new MainTopImgInfo("/img/poster/main_poster_devil_01.png", "", 2, 1));
-//		list.add(new MainTopImgInfo("/img/poster/main_poster_cube_01.png", "", 2, 1));
-//		list.add(new MainTopImgInfo("/img/poster/main_poster_parasyte_01.png", "", 2, 1));
-		model.addAttribute("mainTop", new JSONArray(list));
-
+		model.addAttribute("mainTop", mainPage.getAllBanner());
+		model.addAttribute("recently", mainPage.getOneRecentlyContent());
+		model.addAttribute("coming", mainPage.getAllComingContent());
+		model.addAttribute("recomend", mainPage.getAllRecommendContent());
 		model.addAttribute("capList", capContent.getCapContentListForMain());
-
-		List<ETCContent> etcList = etcContent.getETCListForMain();
-		model.addAttribute("etcList", etcList);
+		model.addAttribute("etcList", etcContent.getETCListForMain());
 		return "/view/index";
 	}
 

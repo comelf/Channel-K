@@ -1,6 +1,9 @@
 package com.ydeatimes.channelk.web.service;
 
+import javax.persistence.EntityManager;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -22,6 +25,9 @@ public class CapContentService {
 	@Autowired
 	CapContentRepository capContentRepo;
 	
+	@Qualifier("enManager")
+	EntityManager enManager;
+	
 	public Object getCapContentListForMain() {
 		ContentStatus status = statusRepo.findByText(ContentStatus.OPEN);
 		return capContentRepo.findTop14ByStatusOrderByCreateDateDesc(status);
@@ -41,6 +47,13 @@ public class CapContentService {
 		ContentStatus status = statusRepo.findByText(ContentStatus.OPEN);
 		Pageable pageable = new PageRequest(page-1, 10, Direction.DESC, "id");
 		return capContentRepo.findByInfoAndStatus(info, status, pageable);
+	}
+
+	public Page<ContentInfo> getCapInfoForMain() {
+		ContentStatus status = statusRepo.findByText(ContentStatus.OPEN);
+		Pageable pageable = new PageRequest(0, 10, Direction.DESC, "id");
+		System.out.println(capContentRepo.findInfoByStatus(status));
+		return null;
 	}
 
 }

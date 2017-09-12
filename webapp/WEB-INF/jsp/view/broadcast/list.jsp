@@ -4,6 +4,7 @@
 <!DOCTYPE html>
 <html>
 <body>
+<div class="container deco-body">
 	<div class="broadcast-content">
 		<div class="row">
 			<div class="col-md-12">
@@ -69,7 +70,7 @@
 			</div>
 		</div>
 	</div>	
-
+</div>
 
 	<content tag="local_script">
 	<!-- 

@@ -4,6 +4,7 @@
 <!DOCTYPE html>
 <html>
 <body>
+<div class="container deco-body">
 	<div class="cap-content">
 		<div class="row">
 			<div class="col-md-7 col-xs-12 cap-banner thumbnail">
@@ -102,7 +103,8 @@
 				</div>
 			</div>
 		</div>
-	</div>	
+	</div>
+</div>	
 <!-- 	
 	
 	

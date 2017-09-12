@@ -5,13 +5,119 @@
 <!DOCTYPE html>
 <html>
 <body>
-	<div class="main-content">
-		<div class="row">
-			<div class="col-md-12">
-				<div id="top-banner" style="display: block;" >
-					
+<div class="container-fluid" style="margin-top: 91px;">
+ 		<div class="row">
+		<div class="col-md-12">
+			<div id="main-banner" style="display: block;" >
+				<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+				  <ol class="carousel-indicators">
+				  	<c:forEach items="${ mainTop }"  var="banner" varStatus="status">
+				  		<c:choose>
+						   <c:when test="${ status.first }">
+						       <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+						   </c:when>
+						   <c:otherwise>
+						       <li data-target="#carousel-example-generic" data-slide-to="${ status.index}"></li>
+						   </c:otherwise>
+						</c:choose>
+				  	</c:forEach>
+				  </ol>
+				
+				  <div class="carousel-inner" role="listbox">
+				  	<c:forEach items="${ mainTop }"  var="banner" varStatus="status">
+					    <c:choose>
+						   <c:when test="${ status.first }">
+						       <div class="item active">
+						   </c:when>
+						   <c:otherwise>
+						       <div class="item">
+						   </c:otherwise>
+						</c:choose>
+					    	<a href="${banner.link}">
+						      	<div class="main-banner">
+									<div class="main-banner-wrapper">
+										<div class="main-banner-img" style="background-image: url(${banner.image.getUrlPathWithQuality(0)});"></div>
+									</div>
+									<div class="carousel-caption">
+										${banner.caption}
+									</div>
+								</div>
+					      	</a>
+					    </div>
+				    </c:forEach>
+				  </div>
+				
+				  <!-- Controls -->
+				  <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+				    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+				    <span class="sr-only">Previous</span>
+				  </a>
+				  <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+				    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+				    <span class="sr-only">Next</span>
+				  </a>
 				</div>
 			</div>
+		</div>
+	</div>
+</div>
+
+<div class="container deco-body">
+	<div class="main-content">
+		<div class="row">
+			<div class='col-md-9  col-xs-12'>
+				<div class="row section-head" style="margin-top: 0px; margin-bottom: 15px">
+					<div class="col-md-12">
+						<div>최신 연재 캡-컨텐츠</div>
+					</div>
+				</div>
+				<a href="${recently.link}">
+					<div class="thumbnail">
+						<div class="thumbnail-wrapper" style="padding-top: 51.5%;">
+							<div class="thumbnail-img" style="background-image: url(${recently.image.getUrlPathWithQuality(0)});"></div>
+						</div>
+					</div>
+				</a>
+			</div>
+			<div class='col-md-3  col-xs-12'>
+				<div class="row section-head" style="margin-top: 0px; margin-bottom: 15px">
+					<div class="col-md-12">
+						<div>연재 예정 캡-컨텐츠</div>
+					</div>
+				</div>
+				<div class="row">
+					<c:forEach var="come" items="${coming}">
+						<div class='col-md-12  col-xs-6'>
+							<a href="${come.link}">
+								<div class="thumbnail">
+									<div class="thumbnail-wrapper">
+										<div class="thumbnail-img" style="background-image: url(${come.image.getUrlPathWithQuality(0)});"></div>
+									</div>
+								</div>
+							</a>
+						</div>
+					</c:forEach>
+				</div>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="row section-head" style="margin-bottom: 15px">
+				<div class="col-md-12">
+					<div>추천 캡-컨텐츠</div>
+				</div>
+			</div>
+			<c:forEach var="rec" items="${recomend}">
+				<div class='col-md-3  col-xs-6'>
+					<a href="${rec.link}">
+						<div class="thumbnail">
+							<div class="thumbnail-wrapper">
+								<div class="thumbnail-img" style="background-image: url(${rec.image.getUrlPathWithQuality(0)});"></div>
+							</div>
+						</div>
+					</a>
+				</div>
+			</c:forEach>
 		</div>
 		
 		<div class="today-cap content-list">
@@ -183,7 +289,7 @@
 			</div>
 		</div>
 	</div>	
-
+</div>
 
 	<content tag="local_script">
 	<!-- 

@@ -4,6 +4,7 @@
 <!DOCTYPE html>
 <html>
 <body>
+<div class="container deco-body">
 	<div class="content-detail">
 		<div class="row">
 				<div class="col-md-12 content-title">
@@ -70,6 +71,7 @@
 			</c:if>
 		</div>
 	</div>	
+</div>
 <!-- 	
 	
 	

@@ -46,9 +46,7 @@
       </div>
     </nav>
 	
-        <div class="container deco-body">
-			<decorator:body />
-		</div>
+	<decorator:body />
 
 
 <div id="script-wrapper">

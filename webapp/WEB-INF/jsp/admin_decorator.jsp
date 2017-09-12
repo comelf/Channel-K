@@ -57,6 +57,9 @@
 						<li>
 							<a href="/admin/main/topbanner">상단 배너</a>
 						</li>
+						<li>
+							<a href="/admin/main/mainpage">메인 Content</a>
+						</li>
 					</ul>
 				</li>
 				<li>

@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.ydeatimes.channelk.web.model.content.CapContent;
@@ -27,5 +29,7 @@ public interface CapContentRepository extends JpaRepository<CapContent,  Integer
 
 	Page<CapContent> findByInfoAndStatus(ContentInfo info, ContentStatus status, Pageable pageable);
 
+	@Query("select f from cap_content c JOIN c.info f where c.status = :status group by f order by min(c.id)")
+	List<ContentInfo> findInfoByStatus(@Param("status") ContentStatus status);
 	
 }
