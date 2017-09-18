@@ -19,7 +19,6 @@ import com.ydeatimes.channelk.web.model.content.ETCContent;
 import com.ydeatimes.channelk.web.repository.ContentCategoryRepository;
 import com.ydeatimes.channelk.web.repository.ContentStatusRepository;
 import com.ydeatimes.channelk.web.repository.ContentTypeRepository;
-import com.ydeatimes.channelk.web.repository.MainContentRepository;
 import com.ydeatimes.channelk.web.service.CapContentInfoService;
 import com.ydeatimes.channelk.web.service.CapContentService;
 import com.ydeatimes.channelk.web.service.EtcContentService;

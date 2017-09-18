@@ -45,6 +45,28 @@
 				<hr>
 				</div>
 			</div>
+			<c:if test="${paging.totalCount > 10}">
+				<div class="row center">
+					<div class="col-md-12 text-center">
+						<ul class="pagination">
+							<c:if test="${paging.firstPageNo < paging.startPageNo}">
+								<li><a href="/cap/content?id=${ contentId }&page=${paging.startPageNo-1}">«</a></li>
+							</c:if>
+						
+						  	<c:forEach var="pageNum" begin="${paging.startPageNo}" step="1" end="${paging.endPageNo}">
+						  		<c:choose>
+						  			<c:when test="${paging.pageNo eq pageNum}"><li class="active"></c:when>
+						  			<c:otherwise><li></c:otherwise>
+						  		</c:choose>
+						  		<a href="/cap/content?id=${ contentId }&page=${pageNum}">${pageNum}</a></li>
+						  	</c:forEach>
+						  	<c:if test="${paging.endPageNo < paging.finalPageNo}">
+								<li><a href="/cap/content?id=${ contentId }&page=${paging.endPageNo+1}">»</a></li>
+							</c:if>
+						</ul>
+					</div>
+				</div>
+			</c:if>
 		</div>
 	</div>	
 </div>	
