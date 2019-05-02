@@ -52,6 +52,14 @@ public class MainController {
 	@Autowired
 	MainPageService mainPage;
 
+//	@RequestMapping(value = "/test", method = RequestMethod.GET)
+//	public String test(Model model) {
+//
+//
+//		return "/view/index";
+//	}
+//
+	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String indexPage(Model model) {
 		model.addAttribute("mainTop", mainPage.getAllBanner());
@@ -86,7 +94,7 @@ public class MainController {
 	}
 
 	@RequestMapping(value = "/cap/content", method = RequestMethod.GET)
-	public String capContentInfo(@RequestParam(value = "id") int contentId, @RequestParam(value = "page", required = false, defaultValue = "1") Integer page, Model model) {
+	public String capContentInfo(@RequestParam(value = "id") Integer contentId, @RequestParam(value = "page", required = false, defaultValue = "1") Integer page, Model model) {
 
 		ContentInfo info = capInfo.getByContentId(contentId);
 		model.addAttribute("info", info);
@@ -111,6 +119,7 @@ public class MainController {
 		model.addAttribute("paging", new Paging(capPage.getNumber() + 1, (int) capPage.getTotalElements(), capPage.getSize()));
 		
 		content.setViews(content.getViews() + 1);
+		model.addAttribute("contentId", content.getId());
 		model.addAttribute("capContent", content);
 		return "/view/cap/detail";
 	}

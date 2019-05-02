@@ -27,6 +27,13 @@
 		wcs_add["wa"] = "5a7464c1940f";
 		wcs_do();
 	</script>
+	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+	<script>
+	  (adsbygoogle = window.adsbygoogle || []).push({
+	    google_ad_client: "ca-pub-6506232884322856",
+	    enable_page_level_ads: true
+	  });
+	</script>
 </head>
 <body>
 
@@ -47,7 +54,37 @@
     </nav>
 	
 	<decorator:body />
-
+	
+	<div class="footer">
+		<div class="container-fluid footer-content-1">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-3"></div>
+					<div class="col-md-9">
+						<div style="margin-bottom: 20px;">
+							<p class="channelk-info">와이디어타임즈 채널K의 모든 캡-콘텐츠들은 와이디어타임즈에서 제작 및 채널K를 통해서 공급하고 있습니다. </p>
+							<p class="channelk-info">와이디어타임즈의 승인없이 캡-콘텐츠의 일부 또는 전체를 복사하여 다른 매체 (개인 미디어 포함)에 게재하는 행위는 법적 조치에 처해질 수 있습니다.</p>
+						</div>
+						<div>
+							<p class="channelk-address">사업자 등록번호 : 617-37-46891 | 업태 : 서비스업 | 종목 : 온라인디지털콘텐츠 제공업</p>
+							<p class="channelk-address">주소 : 경기도 성남시 대왕판교로645번길 12, 9층 (삼평동, 경기창조혁신센터) </p>
+							<p class="channelk-address">12, Daewangpangyo-ro 645beon-gil, Bundang-gu, Seongnam-si, Gyeonggi-do, Republic of Korea</p>
+							<p class="channelk-info">고객문의 : info.ydeatimes@gmail.com | 제작사 제휴 문의 contact.ydeatimes@gmail.com</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>	
+		<div class="container-fluid footer-content-2">
+			<div class="container">		
+				<div class="row">
+					<div class="col-md-4 text-center channelk-record">2015 부산대학교 LINC사업단 지원기업 선정</div>
+					<div class="col-md-4 text-center channelk-record">2015 경기창조혁신센터 SMART2030 사업자 선정</div>
+					<div class="col-md-4 text-center channelk-record">2016 창업진흥원 창업맞춤형 사업화 지원사업 창업기업 선정</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
 <div id="script-wrapper">
 	<script src="/js/jquery.js"></script>
